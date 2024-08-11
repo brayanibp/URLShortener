@@ -73,6 +73,10 @@ class URLShortenerController extends Controller
         ]);
     }
 
+    public function showAddForm() {
+        return Inertia::render('Add/Index');
+    }
+
 
     /**
      * Summary of generateShortUrl

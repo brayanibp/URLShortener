@@ -1,3 +1,4 @@
+import { Link } from '@inertiajs/react';
 import './style.css';
 
 export default function Index({ urls }) {

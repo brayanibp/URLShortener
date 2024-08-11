@@ -17,7 +17,6 @@ return new class extends Migration
             $table->string('short_url');
             $table->unsignedInteger('clicks')->default(0);
             $table->uuid('user_id')->nullable();
-            $table->foreignUuid('user_id')->constrained();
             $table->timestamps();
         });
     }

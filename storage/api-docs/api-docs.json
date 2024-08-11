@@ -5,76 +5,45 @@
         "version": "1.0.0"
     },
     "paths": {
-        "/api/register": {
-            "post": {
+        "/": {
+            "get": {
                 "tags": [
-                    "Register"
+                    "Home"
                 ],
-                "summary": "Register a new user",
-                "description": "User Registration Endpoint",
-                "operationId": "registerUser",
-                "requestBody": {
-                    "content": {
-                        "multipart/form-data": {
-                            "schema": {
-                                "required": [
-                                    "name",
-                                    "email",
-                                    "password",
-                                    "password_confirmation"
-                                ],
-                                "properties": {
-                                    "name": {
-                                        "type": "text"
-                                    },
-                                    "email": {
-                                        "type": "text"
-                                    },
-                                    "password": {
-                                        "type": "password"
-                                    },
-                                    "password_confirmation": {
-                                        "type": "password"
-                                    }
-                                },
-                                "type": "object"
-                            }
-                        },
-                        "application/json": {
-                            "schema": {}
-                        }
-                    }
-                },
+                "summary": "Prints a URLs Dashboard",
+                "description": "Prints a URLs Dashboard",
+                "operationId": "index",
                 "responses": {
-                    "201": {
-                        "description": "User Registered Successfully",
-                        "content": {
-                            "application/json": {
-                                "schema": {}
-                            }
-                        }
-                    },
                     "200": {
-                        "description": "Registered Successfull",
+                        "description": "Successful dashboard print",
                         "content": {
-                            "application/json": {
-                                "schema": {}
-                            }
-                        }
-                    },
-                    "422": {
-                        "description": "Unprocessable Entity",
-                        "content": {
-                            "application/json": {
-                                "schema": {}
+                            "text/html": {
+                                "schema": {
+                                    "type": "string",
+                                    "example": "<h1>URL Shortener</h1>"
+                                }
                             }
                         }
                     },
                     "400": {
                         "description": "Bad Request",
                         "content": {
-                            "application/json": {
-                                "schema": {}
+                            "text/html": {
+                                "schema": {
+                                    "type": "string",
+                                    "example": "<h1>Bad Request</h1>"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Server Internal Error",
+                        "content": {
+                            "text/html": {
+                                "schema": {
+                                    "type": "string",
+                                    "example": "<h1>Server Internal Error</h1>"
+                                }
                             }
                         }
                     }
@@ -84,8 +53,8 @@
     },
     "tags": [
         {
-            "name": "Register",
-            "description": "Register"
+            "name": "Home",
+            "description": "Home"
         }
     ]
 }

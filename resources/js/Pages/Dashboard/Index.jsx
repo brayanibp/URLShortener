@@ -1,8 +1,23 @@
+import { useState } from 'react';
 import { Link } from '@inertiajs/react';
 import { Tooltip } from 'react-tooltip';
 import './style.css';
+import axios from 'axios';
 
 export default function Index({ urls }) {
+    const [myUrls, setUrls] = useState(urls);
+    const [error, setError] = useState(null);
+
+    const handleDelete = async (url) => {
+        try {
+            const res = await axios.delete(`/api/${url}`);
+            setUrls(res.data.urls);
+        } catch (error) {
+            console.log(error);
+            setError(error.response.data.error);
+        }
+    }
+
     return (
         <div className='dashboard'>
             <h1>URL Shortener</h1>
@@ -27,7 +42,7 @@ export default function Index({ urls }) {
                     </tr>
                 </thead>
                 <tbody>
-                    {urls.map((url, index) => (
+                    {myUrls.map((url, index) => (
                         <tr key={index}>
                             <td>{index + 1}</td>
                             <td>
@@ -39,20 +54,25 @@ export default function Index({ urls }) {
                             <td>
                                 <Tooltip id="goto-tooltip" />
                                 <Link
-                                    className='goto'
+                                    className="goto"
                                     data-tooltip-id="goto-tooltip"
                                     data-tooltip-content={`Go to ${window.location.href}${url.short_url}`}
                                     data-tooltip-place="top"
                                     href={url.short_url}
-                                >🔗</Link>
+                                >
+                                    🔗
+                                </Link>
                             </td>
                             <td>
                                 <Tooltip id="delete-tooltip" />
                                 <button
                                     data-tooltip-id="delete-tooltip"
-                                    data-tooltip-content={`Delete URL`}
+                                    data-tooltip-content={"Delete URL"}
                                     data-tooltip-place="top"
-                                >Delete</button>
+                                    onClick={() => handleDelete(url.short_url)}
+                                >
+                                    Delete
+                                </button>
                             </td>
                         </tr>
                     ))}

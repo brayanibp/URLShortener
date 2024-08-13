@@ -130,6 +130,62 @@
                 }
             }
         },
+        "/redirect/{shortenedUrl}": {
+            "get": {
+                "tags": [
+                    "URL Shortener"
+                ],
+                "summary": "Show redirect page",
+                "description": "Show redirect page",
+                "operationId": "showRedirect",
+                "parameters": [
+                    {
+                        "name": "shortenedUrl",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "emPjo"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "text/html": {
+                                "schema": {
+                                    "type": "string",
+                                    "example": "<h1>Redirect</h1>"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "text/html": {
+                                "schema": {
+                                    "type": "string",
+                                    "example": "<h1>Bad Request</h1>"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Server Internal Error",
+                        "content": {
+                            "text/html": {
+                                "schema": {
+                                    "type": "string",
+                                    "example": "<h1>Server Internal Error</h1>"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/{short_url}": {
             "get": {
                 "tags": [

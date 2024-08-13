@@ -17,3 +17,5 @@ use Illuminate\Support\Facades\Route;
 Route::post("/generate-short-url",[URLShortenerController::class, 'generateShortUrl']);
 
 Route::get('/{shortUrl}', [URLShortenerController::class, 'redirectToOriginalUrl']);
+
+Route::delete('/{shortUrl}', [URLShortenerController::class, 'removeShortenedUrl']);

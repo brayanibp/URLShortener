@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\GenerateShortUrlRequest;
 use App\Models\ShortenedUrl;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Inertia\Inertia;
 use Symfony\Component\HttpFoundation\Response;
@@ -180,8 +179,66 @@ class URLShortenerController extends Controller
 
     /**
      * Summary of showRedirect
+     * @OA\Get(
+     *     path="/redirect/{shortenedUrl}",
+     *     operationId="showRedirect",
+     *     tags={"URL Shortener"},
+     *     summary="Show redirect page",
+     *     description="Show redirect page",
+     *     @OA\Parameter(
+     *         name="shortenedUrl",
+     *         in="path",
+     *         required=true,
+     *         @OA\Schema(
+     *             type="string",
+     *             example="emPjo"
+     *         ),
+     *     ),
+     *     @OA\Response(
+     *         response="200",
+     *         description="Successful operation",
+     *         content={
+     *          @OA\MediaType(
+     *              mediaType="text/html",
+     *              @OA\Schema(
+     *                  type="string",
+     *                  example="<h1>Redirect</h1>"
+     *              ),
+     *          ),
+     *       },
+     *     ),
+     *     @OA\Response(
+     *         response="400",
+     *         description="Bad Request",
+     *         content={
+     *          @OA\MediaType(
+     *              mediaType="text/html",
+     *              @OA\Schema(
+     *                  type="string",
+     *                  example="<h1>Bad Request</h1>"
+     *              ),
+     *          ),
+     *       },
+     *     ),
+     *      @OA\Response(
+     *         response="500",
+     *         description="Server Internal Error",
+     *         content={
+     *          @OA\MediaType(
+     *              mediaType="text/html",
+     *              @OA\Schema(
+     *                  type="string",
+     *                  example="<h1>Server Internal Error</h1>"
+     *              ),
+     *          ),
+     *       },
+     *     ),
+     * )
+     *
      * @param mixed $shortenedUrl
      * @return \Inertia\Response
+     *
+     * @throws \Illuminate\Database\Eloquent\ModelNotFoundException
      */
     public function showRedirect($shortenedUrl) {
         return Inertia::render('Redirect/Index', [
@@ -252,5 +309,80 @@ class URLShortenerController extends Controller
         }
 
         return response()->json(['url' => $redirection_url], Response::HTTP_ACCEPTED);
+    }
+
+    /**
+     * Summary of removeShortenedUrl
+     * @OA\Delete(
+     *     path="/remove-shortened-url/{shortenedUrl}",
+     *     operationId="removeShortenedUrl",
+     *     tags={"URL Shortener"},
+     *     summary="Remove shortened URL",
+     *     description="Remove shortened URL",
+     *     @OA\Parameter(
+     *         name="shortenedUrl",
+     *         in="path",
+     *         required=true,
+     *         @OA\Schema(
+     *             type="string",
+     *             example="emPjo"
+     *         ),
+     *     ),
+     *     @OA\Response(
+     *         response="200",
+     *         description="Successful operation",
+     *         content={
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *              @OA\Schema(
+     *                  type="object",
+     *                  @OA\Property(property="message", type="string", example="URL removed successfully"),
+     *                  @OA\Property(property="urls", type="array", @OA\Items(type="object", ref="#/components/schemas/ShortenedUrl")),
+     *              ),
+     *          ),
+     *       },
+     *     ),
+     *     @OA\Response(
+     *         response="400",
+     *         description="Bad Request",
+     *         content={
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *              @OA\Schema(
+     *                  type="object",
+     *                  @OA\Property(property="message", type="string", example="Bad Request"),
+     *              ),
+     *          ),
+     *       },
+     *     ),
+     *      @OA\Response(
+     *         response="500",
+     *         description="Server Internal Error",
+     *         content={
+     *          @OA\MediaType(
+     *              mediaType="application/json",
+     *              @OA\Schema(
+     *                  type="object",
+     *                  @OA\Property(property="message", type="string", example="Server Internal Error"),
+     *              ),
+     *          ),
+     *       },
+     *     ),
+     * )
+     *
+     * @param string $shortened_url
+     * @return mixed|\Illuminate\Http\JsonResponse
+     */
+    public function removeShortenedUrl(string $shortened_url) {
+        // Find the shortened URL record by its short URL
+        ShortenedUrl::where('short_url', $shortened_url)->delete();
+
+        // retreaving left shorten URLs
+        $shortened_urls = ShortenedUrl::all(['original_url', 'short_url']);
+
+        return response()->json([
+            'message' => 'URL removed successfully',
+            'urls' => $shortened_urls,
+        ], Response::HTTP_OK);
     }
 }

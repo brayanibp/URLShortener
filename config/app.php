@@ -123,4 +123,14 @@ return [
         'store' => env('APP_MAINTENANCE_STORE', 'database'),
     ],
 
+    /*
+    |--------------------------------------------------------------------------
+    | Database shard id
+    |--------------------------------------------------------------------------
+    |
+    | These configuration option determine which database is used to manage
+    | the shorten URLs.
+    |
+    */
+    'db_shard' => env('DB_SHARD_ID', 1),
 ];

@@ -12,11 +12,10 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('shortened_urls', function (Blueprint $table) {
-            $table->uuid('id')->primary();
+            $table->id();
             $table->string('original_url');
             $table->string('short_url');
-            $table->unsignedInteger('clicks')->default(0);
-            $table->uuid('user_id')->nullable();
+            $table->unsignedBigInteger('user_id')->nullable();
             $table->timestamps();
         });
     }

@@ -1,19 +1,63 @@
 import { Link } from '@inertiajs/react';
+import { Tooltip } from 'react-tooltip';
 import './style.css';
 
 export default function Index({ urls }) {
     return (
         <div className='dashboard'>
             <h1>URL Shortener</h1>
-            <Link href={'/add'}>Add</Link>
-            <ul>
-                {urls.map((url, index) => (
-                    <li key={index}>
-                        <a href={url.original_url}>{url.original_url}</a>
-                        <a href={url.original_url}>{url.short_url}</a>
-                    </li>
-                ))}
-            </ul>
+            <Tooltip id="add-tooltip" />
+            <Link
+                href={'/add'}
+                class="add-button"
+                data-tooltip-id="add-tooltip"
+                data-tooltip-content={`Shorten a new URL`}
+                data-tooltip-place="top"
+            >
+                Add URL
+            </Link>
+            <table className='urls-table'>
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Code</th>
+                        <th>Original URL</th>
+                        <th></th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {urls.map((url, index) => (
+                        <tr key={index}>
+                            <td>{index + 1}</td>
+                            <td>
+                                <span>{url.short_url}</span>
+                            </td>
+                            <td>
+                                <span>{url.original_url}</span>
+                            </td>
+                            <td>
+                                <Tooltip id="goto-tooltip" />
+                                <Link
+                                    className='goto'
+                                    data-tooltip-id="goto-tooltip"
+                                    data-tooltip-content={`Go to ${window.location.href}${url.short_url}`}
+                                    data-tooltip-place="top"
+                                    href={url.short_url}
+                                >🔗</Link>
+                            </td>
+                            <td>
+                                <Tooltip id="delete-tooltip" />
+                                <button
+                                    data-tooltip-id="delete-tooltip"
+                                    data-tooltip-content={`Delete URL`}
+                                    data-tooltip-place="top"
+                                >Delete</button>
+                            </td>
+                        </tr>
+                    ))}
+                </tbody>
+            </table>
         </div>
     );
 }

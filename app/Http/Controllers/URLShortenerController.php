@@ -91,7 +91,6 @@ class URLShortenerController extends Controller
      *         @OA\JsonContent(
      *             type="object",
      *             @OA\Property(property="url", type="string", example="https://brayanibp.dev"),
-     *             @OA\Property(property="db_shard", type="integer", example=1),
      *         ),
      *     ),
      *     @OA\Response(
@@ -314,13 +313,13 @@ class URLShortenerController extends Controller
     /**
      * Summary of removeShortenedUrl
      * @OA\Delete(
-     *     path="/remove-shortened-url/{shortenedUrl}",
+     *     path="/{shortened_url}",
      *     operationId="removeShortenedUrl",
      *     tags={"URL Shortener"},
      *     summary="Remove shortened URL",
      *     description="Remove shortened URL",
      *     @OA\Parameter(
-     *         name="shortenedUrl",
+     *         name="shortened_url",
      *         in="path",
      *         required=true,
      *         @OA\Schema(
@@ -337,7 +336,15 @@ class URLShortenerController extends Controller
      *              @OA\Schema(
      *                  type="object",
      *                  @OA\Property(property="message", type="string", example="URL removed successfully"),
-     *                  @OA\Property(property="urls", type="array", @OA\Items(type="object", ref="#/components/schemas/ShortenedUrl")),
+     *                  @OA\Property(
+     *                      property="urls",
+     *                      type="array",
+     *                      @OA\Items(
+     *                          type="object",
+     *                          @OA\Property(property="original_url", type="string", example="https://brayanibp.dev"),
+     *                          @OA\Property(property="short_url", type="string", example="http://localhost:8000/emPjo"),
+     *                      ),
+     *                  ),
      *              ),
      *          ),
      *       },

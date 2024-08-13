@@ -67,10 +67,6 @@
                                     "url": {
                                         "type": "string",
                                         "example": "https://brayanibp.dev"
-                                    },
-                                    "db_shard": {
-                                        "type": "integer",
-                                        "example": 1
                                     }
                                 },
                                 "type": "object"
@@ -231,6 +227,93 @@
                                         "error": {
                                             "type": "string",
                                             "example": "URL not found"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/{shortened_url}": {
+            "delete": {
+                "tags": [
+                    "URL Shortener"
+                ],
+                "summary": "Remove shortened URL",
+                "description": "Remove shortened URL",
+                "operationId": "removeShortenedUrl",
+                "parameters": [
+                    {
+                        "name": "shortened_url",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "emPjo"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "URL removed successfully"
+                                        },
+                                        "urls": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "original_url": {
+                                                        "type": "string",
+                                                        "example": "https://brayanibp.dev"
+                                                    },
+                                                    "short_url": {
+                                                        "type": "string",
+                                                        "example": "http://localhost:8000/emPjo"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Bad Request"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Server Internal Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Server Internal Error"
                                         }
                                     },
                                     "type": "object"

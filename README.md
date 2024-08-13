@@ -1,66 +1,92 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# URL Shortener
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## Pre-requisites
 
-## About Laravel
+- PHP 8.3
+- Composer
+- NodeJS 18.18.2
+- MySQL or MariaDB
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+***"NOTE: you can use xampp"***
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Get the repo
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+```
+git clone https://github.com/brayanibp/URLShortener.git
+```
 
-## Learning Laravel
+## Install dependencies
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+You need to be placed inside the project folder, if you don't then exec:
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+```
+cd ./URLShortener
+```
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+After being placed inside URLShortener folder then execute:
 
-## Laravel Sponsors
+```
+composer install
+```
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+```
+npm i--save
+```
 
-### Premium Partners
+## Config the project
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+Once we did install dependencies then has to config the project
 
-## Contributing
+For that purpose we execute:
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+```
+cp .env.example .env
+```
 
-## Code of Conduct
+This will copy a basic ENVIRONMENT config.
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+***"If you have setted up password or custom user for you MySQL installation then have to change 'DB_USERNAME' and 'DB_PASSWORD' with the rigth one credentials"***
 
-## Security Vulnerabilities
+After create the .env file we need to generate encryption app key so Laravel is able to run.
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+```
+php artisan key:generate
+```
 
-## License
+In your database you need to create the project's database for that you could follow the next steps:
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+```
+$ mysql -u root -p
+
+>CREATE DATABASE url_shortener;
+>exit;
+```
+Once created the database you have to run Laravel migrations:
+
+```
+php artisan migrate
+```
+
+***"If need to run migrations again, you could use `php artisan migrate:refresh` run it with caution since it will wipe up all your previous migrations for 'url_shortener' database"***
+
+## Run application
+
+### Development
+
+```
+php artisan serve --host 0.0.0.0
+```
+
+```
+npm run dev
+```
+
+With the above command lines you will instanciate the project binding localhost, 0.0.0.0, 127.0.0.1, 192.168.*.*, depending on your network config. Using by default the port 8000, if you need a custom port for development purposes then add '--port' flag followed with with the port number to use.
+
+### Production
+
+To deploy the project in a production enviroment for a normal VPS you should config Apache2 or Nginx server to point directly in the '/public' directory inside URLShortener project and execute the JS bundle views with:
+
+```
+npm run build
+```

@@ -12,7 +12,10 @@ return new class extends Migration
      */
     public function up(): void
     {
+        // adding uuid extension for postgress if dont exits
         DB::statement('CREATE EXTENSION IF NOT EXISTS "uuid-ossp";');
+
+        // creates the short urls table
         Schema::create('shortened_urls', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->string('original_url');
@@ -20,6 +23,8 @@ return new class extends Migration
             $table->unsignedBigInteger('user_id')->nullable();
             $table->timestamps();
         });
+
+        // giving uuid generation to id column
         DB::statement('ALTER TABLE shortened_urls ALTER COLUMN id SET DEFAULT uuid_generate_v4();');
     }
 

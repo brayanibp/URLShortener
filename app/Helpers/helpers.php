@@ -3,10 +3,10 @@
 /**
  * Summary of base62_encode
  * Recieves a Dec secuency and Return a Base62 encoded number
- * @param mixed $num
+ * @param int|float $num
  * @return string
  */
-function base62_encode($num) {
+function base62_encode(int|float $num) {
     // characters for base62 encoding
     $chars =
         // lowercase letters
@@ -37,7 +37,7 @@ function base62_encode($num) {
         $remainder = $num % $characters_length;
 
         // int division result
-        $num = intdiv($num, $characters_length);
+        $num = floor((float) ($num / $characters_length));
 
         // getting the character from the character set
         // based on the remainder value

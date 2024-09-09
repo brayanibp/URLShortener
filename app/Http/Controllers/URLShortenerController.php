@@ -156,13 +156,13 @@ class URLShortenerController extends Controller
         $url_instance->save();
 
         // getting the url ID
-        $url_id = $url_instance->id;
+        $url_id = str_replace("-", "", $url_instance->id);
 
         // filling the url ID with zeros
-        $number_secuence = Str::padLeft($url_id, 5, '0');
+        $number_secuence = hexdec($url_id);
 
         // base 62 encoding the url ID
-        $base62 = base62_encode("$db_shard$number_secuence");
+        $base62 = base62_encode((float) "$db_shard$number_secuence");
 
         // updating the url with the short url
         $url_instance->update([
@@ -171,6 +171,9 @@ class URLShortenerController extends Controller
 
         // returns short URL
         return response()->json([
+            'id' => $url_instance->id,
+            'number' => $number_secuence,
+            // returns the short URL
             'short_url' => $base62,
             'original_url' => $original_url,
         ], Response::HTTP_CREATED);

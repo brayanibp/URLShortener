@@ -14,7 +14,7 @@ services:
     envVars: # Environment variables
       - key: DATABASE_URL
         fromDatabase: # Reference a property of a database (see available properties below)
-          name: mydatabase
+          name: url-shortener
           property: connectionString
       - key: REDIS_HOST
         fromService: # Reference a property from another service (see available properties below)

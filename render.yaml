@@ -1,15 +1,15 @@
 services:
   - type: web
-    runtime: php
+    runtime: docker
+    dockerfilePath: Dockerfile # PHP NGINX IMAGE
+    dockerContext: ./
+    dockerCommand: ./start.sh
     name: url-shortener
     repo: https://github.com/brayanibp/URLShortener.git # Default: Repo containing render.yaml
     numInstances: 1   # Manual scaling configuration. Default: 1 for new services
     region: oregon # Default: oregon
     plan: free    # Default: starter
     branch: main      # Default: master
-    buildCommand: composer install
-    preDeployCommand: php artisan migrate
-    startCommand: php artisan serve
     autoDeploy: true # Disable automatic deploys
     envVars: # Environment variables
       - key: DATABASE_URL

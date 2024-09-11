@@ -12,10 +12,35 @@ services:
     branch: main      # Default: master
     autoDeploy: true # Disable automatic deploys
     envVars: # Environment variables
-      - key: DATABASE_URL
-        fromDatabase: # Reference a property of a database (see available properties below)
+      - key: DB_SHARD_ID
+        type: number
+        value: generateValue
+      - key: DB_CONNECTION
+        value: pgsql
+      - key: DB_HOST
+        fromDatabase:
           name: url-shortener
-          property: connectionString
+          property: host
+      - key: DB_PORT
+        fromDatabase:
+          name: url-shortener
+          property: port
+      - key: DB_DATABASE
+        fromDatabase:
+          name: url-shortener
+          property: databaseName
+      - key: DB_USERNAME
+        fromDatabase:
+          name: url-shortener
+          property: user
+      - key: DB_PASSWORD
+        fromDatabase:
+          name: url-shortener
+          property: password
+      # - key: DATABASE_URL
+      #   fromDatabase: # Reference a property of a database (see available properties below)
+      #     name: url-shortener
+      #     property: connectionString
       - key: REDIS_HOST
         fromService: # Reference a property from another service (see available properties below)
           type: redis

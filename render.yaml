@@ -1,8 +1,8 @@
 services:
   - type: web
     runtime: docker
+    dockerContext: . # current directory
     dockerfilePath: Dockerfile # PHP NGINX IMAGE
-    dockerContext: .
     name: url-shortener
     repo: https://github.com/brayanibp/URLShortener.git # Default: Repo containing render.yaml
     numInstances: 1   # Manual scaling configuration. Default: 1 for new services
@@ -14,8 +14,7 @@ services:
       - key: APP_KEY
         sync: false
       - key: DB_SHARD_ID
-        type: number
-        value: generateValue
+        value: 1
       - key: DB_CONNECTION
         value: pgsql
       - key: DB_HOST

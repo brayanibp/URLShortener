@@ -28,4 +28,4 @@ ENV APP_ENV production
 ENV APP_DEBUG false
 ENV LOG_CHANNEL stderr
 RUN ["npm", "install", "--save"]
-RUN ["npm", "build"]
+RUN ["npm", "run", "build"]

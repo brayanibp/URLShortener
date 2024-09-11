@@ -14,7 +14,7 @@ ENV LOG_CHANNEL stderr
 # Allow composer to run as root
 ENV COMPOSER_ALLOW_SUPERUSER 1
 # Laravel Deps
-RUN ["composer install --no-dev --working-dir=/var/www/html"]
+RUN ["composer install", "--no-dev --working-dir=/var/www/html"]
 # Start
 CMD ["/start.sh"]
 

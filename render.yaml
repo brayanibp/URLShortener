@@ -11,6 +11,8 @@ services:
     branch: main      # Default: master
     autoDeploy: true # Disable automatic deploys
     envVars: # Environment variables
+      - key: APP_KEY
+        sync: false
       - key: DB_SHARD_ID
         type: number
         value: generateValue

@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
-echo "working directory"
+echo "Working directory"
 pwd
 echo "Running composer"
-composer install --no-dev --working-dir=/var/www/html
+# composer install --no-dev --working-dir=/var/www/html
 
 echo "Caching config..."
 php artisan config:cache

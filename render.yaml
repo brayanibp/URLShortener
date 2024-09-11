@@ -37,10 +37,8 @@ services:
         fromDatabase:
           name: url-shortener
           property: password
-      # - key: DATABASE_URL
-      #   fromDatabase: # Reference a property of a database (see available properties below)
-      #     name: url-shortener
-      #     property: connectionString
+      - key: CACHE_STORE
+        value: redis
       - key: REDIS_HOST
         fromService: # Reference a property from another service (see available properties below)
           type: redis

@@ -14,6 +14,8 @@ services:
     envVars: # Environment variables
       - key: APP_KEY
         sync: false
+      - key: PORT
+        value: 80
       - key: DB_SHARD_ID
         value: 1
       - key: DB_CONNECTION

@@ -1,5 +1,6 @@
 # PHP
 FROM richarvey/nginx-php-fpm:3.1.6 AS LARAVEL_BUILD
+WORKDIR /var/www/html
 COPY . .
 # Image config
 ENV SKIP_COMPOSER 1
@@ -20,10 +21,11 @@ CMD ["/start.sh"]
 
 # NODE
 FROM node:lts-alpine AS INERTIA_BUILD
+WORKDIR /var/www/html
 COPY . .
 #Laravel config
 ENV APP_ENV production
 ENV APP_DEBUG false
 ENV LOG_CHANNEL stderr
-RUN ["npm", "install", "--no-dev --save"]
+RUN ["npm", "install", "--save"]
 RUN ["npm", "build"]

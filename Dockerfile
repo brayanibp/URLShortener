@@ -25,5 +25,5 @@ COPY . .
 ENV APP_ENV production
 ENV APP_DEBUG false
 ENV LOG_CHANNEL stderr
-RUN ["npm install --no-dev --save"]
-RUN ["npm run build"]
+RUN ["npm", "install", "--no-dev --save"]
+RUN ["npm", "build"]

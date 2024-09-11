@@ -28,7 +28,7 @@ services:
       - key: DB_DATABASE
         fromDatabase:
           name: url-shortener
-          property: databaseName
+          property: database
       - key: DB_USERNAME
         fromDatabase:
           name: url-shortener
